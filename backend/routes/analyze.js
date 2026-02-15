@@ -1,7 +1,6 @@
 const express = require("express");
 const multer = require("multer");
 const axios = require("axios");
-const FormData = require("form-data");
 const Record = require("../models/Record");
 
 const router = express.Router();
@@ -10,29 +9,42 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post("/", upload.single("image"), async (req, res) => {
   try {
 
-    // 🔴 Check if file exists
     if (!req.file) {
-      console.log("No file received from frontend");
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    const form = new FormData();
-    form.append("image", req.file.buffer, {
-      filename: "upload.jpg",
-      contentType: req.file.mimetype
-    });
-
-    console.log("Sending file to Python...");
-
+    // Call HuggingFace Cloud API
     const response = await axios.post(
-      "http://localhost:5000/analyze",
-      form,
-      { headers: form.getHeaders() }
+      "https://api-inference.huggingface.co/models/trpakov/vit-face-expression",
+      req.file.buffer,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.HF_TOKEN}`,
+          "Content-Type": "application/octet-stream"
+        }
+      }
     );
 
-    const data = response.data;
+    const results = response.data;
+    const sorted = results.sort((a, b) => b.score - a.score);
+    const top_emotion = sorted[0].label.toLowerCase();
 
-    console.log("Python response:", data);
+    let engaged = 0;
+    let not_engaged = 0;
+
+    if (["happy", "neutral", "surprise"].includes(top_emotion)) {
+      engaged = 1;
+    } else {
+      not_engaged = 1;
+    }
+
+    const data = {
+      total_students: 1,
+      dominant_emotion: top_emotion,
+      engaged,
+      not_engaged,
+      engagement_percentage: engaged * 100
+    };
 
     const record = new Record(data);
     await record.save();
@@ -40,8 +52,8 @@ router.post("/", upload.single("image"), async (req, res) => {
     res.json(data);
 
   } catch (error) {
-    console.log("ANALYZE ERROR:", error.response?.data || error.message);
-    res.status(500).json({ error: "Error analyzing image" });
+    console.log("HF ERROR:", error.response?.data || error.message);
+    res.status(500).json({ error: "AI processing failed" });
   }
 });
 
