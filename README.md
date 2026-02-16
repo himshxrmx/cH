@@ -90,45 +90,12 @@ Provides analytics dashboard access
 
 🏗 Technical Architecture
 🔁 System Flow
-User Uploads Image
-        ↓
-Frontend (HTML/CSS/JS)
-        ↓
-Node.js Backend (Express)
-        ↓
-Hugging Face AI Model API
-        ↓
-Emotion Prediction
-        ↓
-Engagement Calculation
-        ↓
-MongoDB Atlas Storage
-        ↓
-JSON Response to UI
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/8d2c27b3-1022-4505-b907-8932d8b33130" />
+
 
 📊 Architecture Diagram (Logical View)
-┌─────────────────────┐
-│     Frontend        │
-│  (HTML/CSS/JS)      │
-└──────────┬──────────┘
-           │ HTTP Request
-           ▼
-┌─────────────────────┐
-│  Node.js Backend    │
-│  Express + Multer   │
-└──────────┬──────────┘
-           │ API Call
-           ▼
-┌─────────────────────┐
-│  Hugging Face AI    │
-│  ViT Emotion Model  │
-└──────────┬──────────┘
-           │ Emotion Result
-           ▼
-┌─────────────────────┐
-│ MongoDB Atlas Cloud │
-│ Engagement Records  │
-└─────────────────────┘
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/c4971272-229d-45f5-b464-f95190430d71" />
+
 
 ☁ Cloud Hosting Details
 Component	Cloud Provider
@@ -204,25 +171,11 @@ Environment Variables
 
 Secure Token-based authentication
 
-📁 Project Structure
-Smart-Attendance/
-│
-├── backend/
-│   ├── models/
-│   │   └── Record.js
-│   ├── routes/
-│   │   └── analyze.js
-│   ├── server.js
-│   └── package.json
-│
-├── frontend/
-│   ├── index.html
-│   ├── dashboard.html
-│   ├── style.css
-│   └── script.js
-│
-├── .env
-└── README.md
+
+Project Structure
+
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/fd21fbde-8b4c-4992-a429-96c26e20c62d" />
+
 
 ⚙️ Environment Variables
 
@@ -287,36 +240,8 @@ No sensitive data exposed in frontend
 
 CORS configured
 
-📈 Future Improvements
 
-Multi-face detection per image
 
-Real-time webcam support
 
-Engagement trend analytics graph
 
-Role-based login system
-
-Teacher dashboard
-
-Classroom-wise data filtering
-
-AWS/GCP deployment
-
-🏆 Hackathon Highlights
-
-Cloud-native deployment
-
-AI inference integration
-
-Database integration
-
-REST API architecture
-
-Scalable modular design
-
-👨‍💻 Author
-
-Built for Cloud Hackathon 2026
-Smart Attendance – AI Powered Engagement Detection
 
