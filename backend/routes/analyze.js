@@ -15,7 +15,7 @@ router.post("/", upload.single("image"), async (req, res) => {
 
     // Call HuggingFace Cloud API
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/trpakov/vit-face-expression",
+      "https://router.huggingface.co/hf-inference/models/trpakov/vit-face-expression",
       req.file.buffer,
       {
         headers: {
@@ -58,4 +58,5 @@ router.post("/", upload.single("image"), async (req, res) => {
 });
 
 module.exports = router;
+
 
